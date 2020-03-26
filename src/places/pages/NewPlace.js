@@ -1,11 +1,10 @@
-import React, {useCallback} from "react";
+import React from "react";
 
 import Input from "../../common/components/FormElements/Input";
 import Button from "../../common/components/FormElements/Button";
 import {VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE} from "../../common/util/validators";
 import {INITIAL_PLACE, useForm} from "../../common/hooks/form-hook";
 import "./PlaceForm.css";
-
 
 
 const NewPlace = props => {

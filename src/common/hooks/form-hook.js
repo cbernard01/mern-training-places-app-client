@@ -6,6 +6,12 @@ export const INITIAL_PLACE = {
   address: {value: "", isValid: false}
 };
 
+export const INITIAL_LOGIN = {
+  name: {value: "", isValid: true},
+  email: {value: "", isValid: false},
+  password: {value: "", isValid: false}
+};
+
 const formReducer = (state, action) => {
   switch(action.type) {
     case "INPUT_CHANGE":
@@ -28,8 +34,6 @@ const formReducer = (state, action) => {
       return state;
   }
 };
-
-
 
 export const useForm = (initialInput, initialFormValidity) => {
   const [formState, dispatch] = useReducer(formReducer, {

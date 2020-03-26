@@ -1,19 +1,34 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 
 import Card from "../../common/components/UIElements/Card";
 import Button from "../../common/components/FormElements/Button";
 import Modal from "../../common/components/UIElements/Modal";
 import Map from "../../common/components/UIElements/Map";
+import {AuthContext} from "../../common/context/authentication-context";
 import "./PlaceItem.css";
 
 const PlaceItem = props => {
+  const auth = useContext(AuthContext);
+
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+
   const openMapHandler = () => setShowMap(true);
   const closeMapHandler = () => setShowMap(false);
   const openDeleteWarningHandler = () => setShowConfirmModal(true);
   const closeDeleteHandler = () => setShowConfirmModal(false);
   const confirmDeleteHandler = () => setShowConfirmModal(false);
+
+  const renderButtons = () => {
+    if (auth.isLoggedIn) {
+      return (
+        <React.Fragment>
+          <Button to={`/places/${props.id}`}>EDIT</Button>
+          <Button danger onClick={openDeleteWarningHandler}>DELETE</Button>
+        </React.Fragment>
+      );
+    }
+  };
 
   return (
     <React.Fragment>
@@ -54,8 +69,7 @@ const PlaceItem = props => {
           </div>
           <div className={"place-item__actions"}>
             <Button inverse onClick={openMapHandler}>VIEW ON MAP</Button>
-            <Button to={`/places/${props.id}`}>EDIT</Button>
-            <Button danger onClick={openDeleteWarningHandler}>DELETE</Button>
+            {renderButtons()}
           </div>
         </Card>
       </li>

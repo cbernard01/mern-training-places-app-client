@@ -61,6 +61,7 @@ const UpdatePlace = () => {
         initialValue={formState.inputs.title.value}
         initialValid={formState.inputs.title.isValid}
       />
+
       <Input
         id={"description"}
         element={"textarea"}
@@ -73,7 +74,7 @@ const UpdatePlace = () => {
       />
       <Button type={"submit"} disabled={!formState.isValid}>UPDATE PLACE</Button>
     </form>
-  )
+  );
 };
 
 export default UpdatePlace;
