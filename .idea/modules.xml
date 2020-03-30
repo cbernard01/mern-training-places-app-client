@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/mern-training-places-app-client.iml" filepath="$PROJECT_DIR$/.idea/mern-training-places-app-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mern-training-places-app-server/.idea/mern-training-places-app-server.iml" filepath="$PROJECT_DIR$/../mern-training-places-app-server/.idea/mern-training-places-app-server.iml" />
     </modules>
   </component>
 </project>
