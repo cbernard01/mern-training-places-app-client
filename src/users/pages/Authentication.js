@@ -25,18 +25,21 @@ const Authentication = () => {
 
   const submitHandler = async event => {
     event.preventDefault();
+    let responseData;
 
     try {
       if (isLoginMode) {
-        await sendRequest("http://localhost:5000/api/users/login",
+        responseData = await sendRequest("http://localhost:5000/api/users/login",
           "POST",
           {"Content-Type": "application/json"},
           JSON.stringify({
             email: formState.inputs.email.value,
             password: formState.inputs.password.value
-          }));
+          })
+        );
+
       } else {
-        await sendRequest("http://localhost:5000/api/users/signup", "POST",
+        responseData = await sendRequest("http://localhost:5000/api/users/signup", "POST",
           {"Content-Type": "application/json"},
           JSON.stringify({
             name: formState.inputs.name.value,
@@ -45,9 +48,10 @@ const Authentication = () => {
             image: "tester",
             places: []
           }));
+
       }
 
-      auth.login();
+      auth.login(responseData.payload.user.id);
     } catch (errs) {
     }
   };
