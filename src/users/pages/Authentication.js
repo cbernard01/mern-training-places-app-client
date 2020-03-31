@@ -3,7 +3,6 @@ import React, {useContext, useState} from "react";
 import Input from "../../common/components/FormElements/Input";
 import {
   VALIDATOR_EMAIL,
-  VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE
 } from "../../common/util/validators";
@@ -107,8 +106,8 @@ const Authentication = () => {
             element={"input"}
             type={"password"}
             label={"Password"}
-            validators={[VALIDATOR_MINLENGTH(5), VALIDATOR_MAXLENGTH(15)]}
-            errorText={"Please enter a valid password (between five and fifteen characters long)."}
+            validators={[VALIDATOR_MINLENGTH(6)]}
+            errorText={"Please enter a valid password (at least five characters long)."}
             onInput={inputHandler}
             initialValue={formState.inputs.password.value}
             initialValid={formState.inputs.password.isValid}

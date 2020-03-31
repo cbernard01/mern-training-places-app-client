@@ -5,10 +5,13 @@ import Button from "../../common/components/FormElements/Button";
 import Modal from "../../common/components/UIElements/Modal";
 import Map from "../../common/components/UIElements/Map";
 import {AuthContext} from "../../common/context/authentication-context";
+import {useHttpClient} from "../../common/hooks/http-hook";
+import ErrorModal from "../../common/components/UIElements/ErrorModal";
 import "./PlaceItem.css";
 
 const PlaceItem = props => {
   const auth = useContext(AuthContext);
+  const {errors, sendRequest, clearErrors} = useHttpClient();
 
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -17,10 +20,22 @@ const PlaceItem = props => {
   const closeMapHandler = () => setShowMap(false);
   const openDeleteWarningHandler = () => setShowConfirmModal(true);
   const closeDeleteHandler = () => setShowConfirmModal(false);
-  const confirmDeleteHandler = () => setShowConfirmModal(false);
+
+  const confirmDeleteHandler = async () => {
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/places/${props.id}`,
+        "DELETE",
+        {"Content-Type": "application/json"}
+      );
+      props.onDelete(props.id);
+    } catch (errs) {
+    }
+    setShowConfirmModal(false);
+  };
 
   const renderButtons = () => {
-    if (auth.isLoggedIn) {
+    if (auth.isLoggedIn && auth.userId === props.creatorId) {
       return (
         <React.Fragment>
           <Button to={`/places/${props.id}`}>EDIT</Button>
@@ -32,6 +47,7 @@ const PlaceItem = props => {
 
   return (
     <React.Fragment>
+      {errors && <ErrorModal errors={errors} onClear={clearErrors}/>}
       <Modal
         show={showMap}
         onCancel={closeMapHandler}
