@@ -9,6 +9,7 @@ import {useHttpClient} from "../../common/hooks/http-hook";
 import ErrorModal from "../../common/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../common/components/UIElements/LoadingSpinner";
 import {AuthContext} from "../../common/context/authentication-context";
+import ImageUpload from "../../common/components/FormElements/ImageUpload";
 import "./PlaceForm.css";
 
 
@@ -23,17 +24,14 @@ const NewPlace = props => {
     event.preventDefault();
 
     try {
-      await sendRequest("http://localhost:5000/api/places",
-        "POST",
-        {"Content-Type": "application/json"},
-        JSON.stringify({
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          address: formState.inputs.address.value,
-          creator: auth.userId
-        })
-      );
+      const formData = new FormData();
+      formData.append("title", formState.inputs.title.value);
+      formData.append("description", formState.inputs.description.value);
+      formData.append("address", formState.inputs.address.value);
+      formData.append("image", formState.inputs.image.value);
+      formData.append("creator", auth.userId);
 
+      await sendRequest("http://localhost:5000/api/places", "POST", {}, formData);
       history.push("/");
     } catch (errs) {
     }
@@ -53,6 +51,9 @@ const NewPlace = props => {
           errorText={"Please enter a valid title."}
           onInput={inputHandler}
         />
+
+        <ImageUpload center id={"image"} onInput={inputHandler} errorText={"Please provide an image."}/>
+
         <Input
           id={"description"}
           element={"textarea"}
