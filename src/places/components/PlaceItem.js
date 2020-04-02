@@ -22,6 +22,7 @@ const PlaceItem = props => {
   const closeDeleteHandler = () => setShowConfirmModal(false);
 
   const confirmDeleteHandler = async () => {
+    setShowConfirmModal(false);
     try {
       await sendRequest(
         `http://localhost:5000/api/places/${props.id}`,
@@ -31,7 +32,6 @@ const PlaceItem = props => {
       props.onDelete(props.id);
     } catch (errs) {
     }
-    setShowConfirmModal(false);
   };
 
   const renderButtons = () => {
