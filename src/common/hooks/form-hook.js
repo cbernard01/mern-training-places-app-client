@@ -9,7 +9,8 @@ export const INITIAL_PLACE = {
 export const INITIAL_LOGIN = {
   name: {value: "", isValid: true},
   email: {value: "", isValid: false},
-  password: {value: "", isValid: false}
+  password: {value: "", isValid: false},
+  image: {value: "", isValid: true}
 };
 
 const formReducer = (state, action) => {
