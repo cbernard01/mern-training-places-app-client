@@ -45,7 +45,7 @@ const Authentication = () => {
 
       }
 
-      auth.login(responseData.payload.user.id);
+      auth.login(responseData.payload.user.id, responseData.payload.token);
     } catch (errs) {
     }
   };

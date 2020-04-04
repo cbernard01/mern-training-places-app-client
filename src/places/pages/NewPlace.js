@@ -31,7 +31,12 @@ const NewPlace = props => {
       formData.append("image", formState.inputs.image.value);
       formData.append("creator", auth.userId);
 
-      await sendRequest("http://localhost:5000/api/places", "POST", {}, formData);
+      await sendRequest("http://localhost:5000/api/places",
+        "POST",
+        {"Authorization": `Bearer ${auth.token}`},
+        formData
+      );
+
       history.push("/");
     } catch (errs) {
     }
