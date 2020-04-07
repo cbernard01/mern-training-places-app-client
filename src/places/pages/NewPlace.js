@@ -30,7 +30,7 @@ const NewPlace = props => {
       formData.append("address", formState.inputs.address.value);
       formData.append("image", formState.inputs.image.value);
 
-      await sendRequest("http://localhost:5000/api/places",
+      await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/api/places`,
         "POST",
         {"Authorization": `Bearer ${auth.token}`},
         formData

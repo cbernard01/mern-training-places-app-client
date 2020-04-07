@@ -25,7 +25,7 @@ const Authentication = () => {
 
     try {
       if (isLoginMode) {
-        responseData = await sendRequest("http://localhost:5000/api/users/login",
+        responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/api/users/login`,
           "POST",
           {"Content-Type": "application/json"},
           JSON.stringify({
@@ -41,7 +41,7 @@ const Authentication = () => {
         formData.append("image", formState.inputs.image.value);
         formData.append("places", "");
 
-        responseData = await sendRequest("http://localhost:5000/api/users/signup", "POST", {}, formData);
+        responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/api/users/signup`, "POST", {}, formData);
 
       }
 
