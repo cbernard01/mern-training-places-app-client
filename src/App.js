@@ -1,17 +1,31 @@
-import React from "react";
+import React, {Suspense} from "react";
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 
 import Users from "./users/pages/Users";
-import NewPlace from "./places/pages/NewPlace";
+// import NewPlace from "./places/pages/NewPlace";
 import MainNavigation from "./common/components/Navigation/MainNavigation";
-import UserPlaces from "./places/pages/UserPlaces";
-import UpdatePlace from "./places/pages/UpdatePlace";
-import Authentication from "./users/pages/Authentication";
+// import UserPlaces from "./places/pages/UserPlaces";
+// import UpdatePlace from "./places/pages/UpdatePlace";
+// import Authentication from "./users/pages/Authentication";
 import {AuthContext} from "./common/context/authentication-context";
 import {useAuthentication} from "./common/hooks/authentication-hook";
+import LoadingSpinner from "./common/components/UIElements/LoadingSpinner";
+
+const NewPlace = React.lazy(() => import("./places/pages/NewPlace"));
+const UserPlaces = React.lazy(() => import("./places/pages/UserPlaces"));
+const UpdatePlace = React.lazy(() => import("./places/pages/UpdatePlace"));
+const Authentication = React.lazy(() => import("./users/pages/Authentication"));
 
 const App = () => {
   const {token, login, logout, userId} = useAuthentication();
+
+  const loading = () => {
+    return (
+      <div className={"center"}>
+        <LoadingSpinner/>
+      </div>
+    )
+  }
 
   let routes;
   if (token) {
@@ -40,7 +54,7 @@ const App = () => {
       <Router>
         <MainNavigation/>
         <main>
-          {routes}
+          <Suspense fallback={loading()}>{routes}</Suspense>
         </main>
       </Router>
     </AuthContext.Provider>
